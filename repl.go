@@ -10,10 +10,8 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(*config) error
 }
-
-var commands map[string]cliCommand
 
 func cleanInput(text string) []string {
 	clean := strings.ToLower(text)
@@ -21,36 +19,24 @@ func cleanInput(text string) []string {
 	return strings.Fields(clean)
 }
 
-func commandExit() error {
+func commandExit(cfg *config) error {
 	fmt.Printf("Closing the Pokedex... Goodbye!\n")
 	os.Exit(0)
 
 	return nil
 }
 
-func commandHelp() error {
+func commandHelp(cfg *config) error {
 	fmt.Printf("Welcome to the Pokedex!\n")
 
-	for _, cmd := range commands {
+	for _, cmd := range cfg.commands {
 		fmt.Printf("%s: %s\n", cmd.name, cmd.description)
 	}
 
 	return nil
 }
 
-func startRepl() {
-	commands = map[string]cliCommand{
-		"exit": {
-			name:        "exit",
-			description: "Exit the Pokedex",
-			callback:    commandExit,
-		},
-		"help": {
-			name:        "help",
-			description: "Displays a help message",
-			callback:    commandHelp,
-		},
-	}
+func startRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
@@ -63,10 +49,10 @@ func startRepl() {
 				continue
 			}
 
-			if command, ok := commands[clean[0]]; !ok {
+			if command, ok := cfg.commands[clean[0]]; !ok {
 				fmt.Printf("Unknown command\n")
 			} else {
-				if err := command.callback(); err != nil {
+				if err := command.callback(cfg); err != nil {
 					fmt.Println(err)
 				}
 			}
