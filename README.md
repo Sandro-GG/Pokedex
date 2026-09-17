@@ -17,7 +17,7 @@ Requests to the PokeAPI are cached in memory using a custom `pokecache` package.
 
 ## Installation
 
-```
+```bash
 git clone https://github.com/Sandro-GG/Pokedex
 cd Pokedex
 go build -o pokedex
@@ -25,7 +25,7 @@ go build -o pokedex
 
 ## Usage
 
-```
+```bash
 ./pokedex
 ```
 
@@ -39,6 +39,6 @@ Available commands:
 
 Run all tests from the repo root:
 
-\`\`\`
+```bash
 go test ./...
-\`\`\`
+```
