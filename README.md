@@ -17,17 +17,17 @@ Requests to the PokeAPI are cached in memory using a custom `pokecache` package.
 
 ## Installation
 
-\`\`\`
+```
 git clone https://github.com/Sandro-GG/Pokedex
 cd Pokedex
 go build -o pokedex
-\`\`\`
+```
 
 ## Usage
 
-\`\`\`
+```
 ./pokedex
-\`\`\`
+```
 
 Available commands:
 - `map` - list next page of location areas
