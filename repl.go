@@ -8,20 +8,14 @@ import (
 	"net/http"
 	"os"
 	"strings"
+
+	"github.com/Sandro-GG/Pokedex/internal"
 )
 
 type cliCommand struct {
 	name        string
 	description string
 	callback    func(*config) error
-}
-
-type LocationArea struct {
-	Next     string `json:"next"`
-	Previous string `json:"previous"`
-	Results  []struct {
-		Name string `json:"name"`
-	} `json:"results"`
 }
 
 func cleanInput(text string) []string {
@@ -48,6 +42,11 @@ func commandHelp(cfg *config) error {
 }
 
 func commandMap(cfg *config) error {
+	if cfg.nextURL == nil {
+		fmt.Println("You have reached the end of the map data!")
+		return nil
+	}
+
 	req, err := http.NewRequest("GET", *cfg.nextURL, nil)
 	if err != nil {
 		return fmt.Errorf("error: %w", err)
@@ -65,7 +64,7 @@ func commandMap(cfg *config) error {
 		return fmt.Errorf("error: %w", err)
 	}
 
-	var locs LocationArea
+	var locs internal.LocationArea
 	if err = json.Unmarshal(data, &locs); err != nil {
 		return fmt.Errorf("error: %w", err)
 	}
