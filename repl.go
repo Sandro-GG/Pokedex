@@ -2,10 +2,7 @@ package main
 
 import (
 	"bufio"
-	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
 	"os"
 	"strings"
 
@@ -42,37 +39,18 @@ func commandHelp(cfg *config) error {
 }
 
 func commandMap(cfg *config) error {
-	if cfg.nextURL == nil {
-		fmt.Println("You have reached the end of the map data!")
-		return nil
-	}
-
-	req, err := http.NewRequest("GET", *cfg.nextURL, nil)
+	// send get request
+	locs, err := internal.FetchLocationAreas(cfg.nextURL)
 	if err != nil {
 		return fmt.Errorf("error: %w", err)
 	}
 
-	client := &http.Client{}
-	res, err := client.Do(req)
-	if err != nil {
-		return fmt.Errorf("error: %w", err)
-	}
-	defer res.Body.Close()
-
-	data, err := io.ReadAll(res.Body)
-	if err != nil {
-		return fmt.Errorf("error: %w", err)
-	}
-
-	var locs internal.LocationArea
-	if err = json.Unmarshal(data, &locs); err != nil {
-		return fmt.Errorf("error: %w", err)
-	}
-
+	// print 20 locations
 	for _, loc := range locs.Results {
 		fmt.Println(loc.Name)
 	}
 
+	// move to the next 20
 	cfg.prevURL = cfg.nextURL
 	cfg.nextURL = &locs.Next
 
