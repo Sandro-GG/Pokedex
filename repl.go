@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"os"
 	"strings"
-
-	"github.com/Sandro-GG/Pokedex/internal"
 )
 
 type cliCommand struct {
@@ -45,7 +43,7 @@ func commandMap(cfg *config) error {
 	}
 
 	// send get request
-	locs, err := internal.FetchLocationAreas(cfg.nextURL)
+	locs, err := cfg.pokeapiClient.ListLocationAreas(cfg.nextURL)
 	if err != nil {
 		return fmt.Errorf("error: %w", err)
 	}
@@ -68,7 +66,7 @@ func commandMapb(cfg *config) error {
 		return nil
 	}
 
-	locs, err := internal.FetchLocationAreas(cfg.prevURL)
+	locs, err := cfg.pokeapiClient.ListLocationAreas(cfg.prevURL)
 	if err != nil {
 		return fmt.Errorf("error: %w", err)
 	}

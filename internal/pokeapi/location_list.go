@@ -1,4 +1,4 @@
-package internal
+package pokeapi
 
 import (
 	"encoding/json"
@@ -7,26 +7,13 @@ import (
 	"net/http"
 )
 
-type LocationArea struct {
-	Next     *string `json:"next"`
-	Previous *string `json:"previous"`
-	Results  []struct {
-		Name string `json:"name"`
-	} `json:"results"`
-}
-
-func FetchLocationAreas(url *string) (LocationArea, error) {
-	if url == nil {
-		return LocationArea{}, fmt.Errorf("no URL provided")
-	}
-
+func (c *Client) ListLocationAreas(url *string) (LocationArea, error) {
 	req, err := http.NewRequest("GET", *url, nil)
 	if err != nil {
 		return LocationArea{}, fmt.Errorf("error: %w", err)
 	}
 
-	client := &http.Client{}
-	res, err := client.Do(req)
+	res, err := c.httpClient.Do(req)
 	if err != nil {
 		return LocationArea{}, fmt.Errorf("error: %w", err)
 	}
