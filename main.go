@@ -26,6 +26,11 @@ func main() {
 				description: "Displays the names of 20 location areas in the Pokemon world",
 				callback:    commandMap,
 			},
+			"mapb": {
+				name:        "mapb",
+				description: "Displays names of the previous 20 location areas in the Pokemon world",
+				callback:    commandMapb,
+			},
 		},
 		nextURL: &startingURL,
 		prevURL: nil,

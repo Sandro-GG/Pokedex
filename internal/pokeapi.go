@@ -8,8 +8,8 @@ import (
 )
 
 type LocationArea struct {
-	Next     string `json:"next"`
-	Previous string `json:"previous"`
+	Next     *string `json:"next"`
+	Previous *string `json:"previous"`
 	Results  []struct {
 		Name string `json:"name"`
 	} `json:"results"`
@@ -17,7 +17,7 @@ type LocationArea struct {
 
 func FetchLocationAreas(url *string) (LocationArea, error) {
 	if url == nil {
-		return LocationArea{}, fmt.Errorf("You have reached the end of the map data!")
+		return LocationArea{}, fmt.Errorf("no URL provided")
 	}
 
 	req, err := http.NewRequest("GET", *url, nil)
