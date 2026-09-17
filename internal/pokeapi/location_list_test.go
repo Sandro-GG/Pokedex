@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 )
 
 func TestListLocationAreas(t *testing.T) {
@@ -12,7 +13,7 @@ func TestListLocationAreas(t *testing.T) {
 	}))
 	defer server.Close()
 
-	c := NewClient()
+	c := NewClient(time.Second)
 	url := server.URL
 	result, err := c.ListLocationAreas(&url)
 	if err != nil {
@@ -34,7 +35,7 @@ func TestListLocationAreaPagination(t *testing.T) {
 	}))
 	defer server.Close()
 
-	c := NewClient()
+	c := NewClient(time.Second)
 	url := server.URL
 	result, err := c.ListLocationAreas(&url)
 	if err != nil {

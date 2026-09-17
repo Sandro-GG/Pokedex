@@ -1,6 +1,10 @@
 package main
 
-import "github.com/Sandro-GG/Pokedex/internal/pokeapi"
+import (
+	"time"
+
+	"github.com/Sandro-GG/Pokedex/internal/pokeapi"
+)
 
 type config struct {
 	pokeapiClient pokeapi.Client
@@ -13,7 +17,7 @@ func main() {
 	startingURL := "https://pokeapi.co/api/v2/location-area/"
 
 	cfg := config{
-		pokeapiClient: pokeapi.NewClient(),
+		pokeapiClient: pokeapi.NewClient(30 * time.Second),
 		commands: map[string]cliCommand{
 			"exit": {
 				name:        "exit",
