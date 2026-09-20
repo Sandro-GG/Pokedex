@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
 	"strings"
@@ -10,7 +11,7 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config) error
+	callback    func(cfg *config, args ...string) error
 }
 
 func cleanInput(text string) []string {
@@ -19,14 +20,14 @@ func cleanInput(text string) []string {
 	return strings.Fields(clean)
 }
 
-func commandExit(cfg *config) error {
+func commandExit(cfg *config, args ...string) error {
 	fmt.Printf("Closing the Pokedex... Goodbye!\n")
 	os.Exit(0)
 
 	return nil
 }
 
-func commandHelp(cfg *config) error {
+func commandHelp(cfg *config, args ...string) error {
 	fmt.Printf("Welcome to the Pokedex!\n")
 
 	for _, cmd := range cfg.commands {
@@ -36,7 +37,7 @@ func commandHelp(cfg *config) error {
 	return nil
 }
 
-func commandMap(cfg *config) error {
+func commandMap(cfg *config, args ...string) error {
 	if cfg.nextURL == nil {
 		fmt.Println("You have reached the end of data")
 		return nil
@@ -60,7 +61,7 @@ func commandMap(cfg *config) error {
 	return nil
 }
 
-func commandMapb(cfg *config) error {
+func commandMapb(cfg *config, args ...string) error {
 	if cfg.prevURL == nil {
 		fmt.Println("You are on the first page. Cannot go back!")
 		return nil
@@ -83,6 +84,25 @@ func commandMapb(cfg *config) error {
 	return nil
 }
 
+func commandExplore(cfg *config, args ...string) error {
+	if len(args) < 1 {
+		return errors.New("please specify the name of the area you wish to explore")
+	}
+
+	encounters, err := cfg.pokeapiClient.LocationGet(args[0])
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Exploring %s...\nFound Pokemon:\n", args[0])
+
+	for _, encounter := range encounters.PokemonEncounters {
+		fmt.Printf(" - %s\n", encounter.Pokemon.Name)
+	}
+
+	return nil
+}
+
 func startRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
@@ -100,7 +120,7 @@ func startRepl(cfg *config) {
 		if command, ok := cfg.commands[clean[0]]; !ok {
 			fmt.Printf("Unknown command\n")
 		} else {
-			if err := command.callback(cfg); err != nil {
+			if err := command.callback(cfg, clean[1:]...); err != nil {
 				fmt.Println(err)
 			}
 		}

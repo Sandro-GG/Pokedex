@@ -14,7 +14,7 @@ type config struct {
 }
 
 func main() {
-	startingURL := "https://pokeapi.co/api/v2/location-area/"
+	startingUrl := "https://pokeapi.co/api/v2/location-area/"
 
 	cfg := config{
 		pokeapiClient: pokeapi.NewClient(30 * time.Second),
@@ -39,8 +39,13 @@ func main() {
 				description: "Displays names of the previous 20 location areas in the Pokemon world",
 				callback:    commandMapb,
 			},
+			"explore": {
+				name:        "explore",
+				description: "Displays the names of Pokemon in the area",
+				callback:    commandExplore,
+			},
 		},
-		nextURL: &startingURL,
+		nextURL: &startingUrl,
 		prevURL: nil,
 	}
 

@@ -7,6 +7,8 @@ import (
 	"github.com/Sandro-GG/Pokedex/internal/pokecache"
 )
 
+const baseUrl = "https://pokeapi.co/api/v2/location-area/"
+
 type Client struct {
 	httpClient http.Client
 	cache      *pokecache.Cache
