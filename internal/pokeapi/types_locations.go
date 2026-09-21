@@ -1,7 +1,5 @@
 package pokeapi
 
-const baseURL = "https://pokeapi.co/api/v2/location-area/"
-
 type LocationAreaList struct {
 	Next     *string              `json:"next"`
 	Previous *string              `json:"previous"`
@@ -18,4 +16,9 @@ type LocationArea struct {
 			Name string `json:"name"`
 		} `json:"pokemon"`
 	} `json:"pokemon_encounters"`
+}
+
+type Pokemon struct {
+	Name    string `json:"name"`
+	BaseExp int    `json:"base_experience"`
 }

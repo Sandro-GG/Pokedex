@@ -8,7 +8,7 @@ import (
 )
 
 func (c *Client) LocationGet(name string) (LocationArea, error) {
-	url := baseUrl + name
+	url := baseLocationUrl + name
 
 	if val, ok := c.cache.Get(url); ok {
 		var locs LocationArea

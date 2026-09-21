@@ -11,6 +11,7 @@ type config struct {
 	commands      map[string]cliCommand
 	nextURL       *string
 	prevURL       *string
+	pokedex       map[string]pokeapi.Pokemon
 }
 
 func main() {
@@ -44,9 +45,15 @@ func main() {
 				description: "Displays the names of Pokemon in the area",
 				callback:    commandExplore,
 			},
+			"catch": {
+				name:        "catch",
+				description: "Attempts to catch a specified Pokemon",
+				callback:    commandCatch,
+			},
 		},
 		nextURL: &startingUrl,
 		prevURL: nil,
+		pokedex: make(map[string]pokeapi.Pokemon),
 	}
 
 	startRepl(&cfg)
