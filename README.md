@@ -4,9 +4,12 @@ A command-line Pokedex built in Go, using the [PokeAPI](https://pokeapi.co/).
 
 ## Features
 
-- Interactive REPL for exploring Pokemon data
-- `map` / `mapb` commands to paginate through location areas
-- In-memory caching layer to reduce redundant API requests
+- Interactive REPL for exploring the Pokemon world
+- Pagination through Pokemon world location areas
+- Area exploration to see which Pokemon reside there
+- Catching mechanics with experience-based catch rates
+- Persistent in-memory Pokedex to track caught Pokemon
+- Custom in-memory caching layer to minimize redundant API requests
 
 ## Caching
 
@@ -30,10 +33,13 @@ go build -o pokedex
 ```
 
 Available commands:
-- `map` - list next page of location areas
-- `mapb` - list previous page of location areas
-- `help` - show available commands
-- `exit` - quit the program
+- `map` - Display the next 20 location areas
+- `mapb` - Display the previous 20 location areas
+- `explore <area_name>` - List all Pokemon found in a given area
+- `catch <pokemon_name>` - Attempt to catch a Pokemon and add it to your Pokedex
+- `help` - Show available commands
+- `exit` - Quit the program
+
 
 ## Testing
 
