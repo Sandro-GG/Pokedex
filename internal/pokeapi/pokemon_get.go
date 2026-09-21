@@ -27,6 +27,12 @@ func (c *Client) PokemonGet(name string) (Pokemon, error) {
 	if err != nil {
 		return Pokemon{}, fmt.Errorf("error: %w", err)
 	}
+	if res.StatusCode > 299 {
+		if res.StatusCode == 404 {
+			return Pokemon{}, fmt.Errorf("error %d: pokemon name not found", res.StatusCode)
+		}
+		return Pokemon{}, fmt.Errorf("bad status code: %d", res.StatusCode)
+	}
 	defer res.Body.Close()
 
 	data, err := io.ReadAll(res.Body)
