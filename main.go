@@ -55,6 +55,11 @@ func main() {
 				description: "Gives information about a Pokemon in your Pokedex",
 				callback:    commandInspect,
 			},
+			"pokedex": {
+				name:        "pokedex",
+				description: "View all the Pokemon you've caught",
+				callback:    commandPokedex,
+			},
 		},
 		nextURL: &startingUrl,
 		prevURL: nil,
