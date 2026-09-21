@@ -38,6 +38,7 @@ Available commands:
 - `explore <area_name>` - List all Pokemon found in a given area
 - `catch <pokemon_name>` - Attempt to catch a Pokemon and add it to your Pokedex
 - `inspect <pokemon_name>` - View details (height, weight, stats, types) of a Pokemon you've caught
+- `pokedex` - Show all the Pokemon you've caught
 - `help` - Show available commands
 - `exit` - Quit the program
 
