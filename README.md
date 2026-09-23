@@ -36,7 +36,7 @@ Available commands:
 - `map` - Display the next 20 location areas
 - `mapb` - Display the previous 20 location areas
 - `explore <area_name>` - List all Pokemon found in a given area
-- `catch <pokemon_name>` - Attempt to catch a Pokemon and add it to your Pokedex
+- `catch <pokemon_name> [ball_type]` - Attempt to catch a Pokemon using a specific ball (`pokeball`, `greatball`, `ultraball`, `masterball`; defaults to `pokeball`)
 - `inspect <pokemon_name>` - View details (height, weight, stats, types) of a Pokemon you've caught
 - `pokedex` - Show all the Pokemon you've caught
 - `help` - Show available commands
