@@ -13,11 +13,13 @@ const basePokemonUrl = "https://pokeapi.co/api/v2/pokemon/"
 type Client struct {
 	httpClient http.Client
 	cache      *pokecache.Cache
+	pokemonUrl string
 }
 
 func NewClient(interval time.Duration) Client {
 	return Client{
 		httpClient: http.Client{},
 		cache:      pokecache.NewCache(interval),
+		pokemonUrl: basePokemonUrl,
 	}
 }

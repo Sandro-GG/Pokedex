@@ -8,7 +8,7 @@ import (
 )
 
 func (c *Client) PokemonGet(name string) (Pokemon, error) {
-	url := basePokemonUrl + name
+	url := c.pokemonUrl + name
 
 	if val, ok := c.cache.Get(url); ok {
 		var pok Pokemon
